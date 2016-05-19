@@ -8,6 +8,10 @@
 				"ROS_INFO"
 			],
 			[
+				"sl",
+				"slng"
+			],
+			[
 				"l",
 				"latitude"
 			],
@@ -435,7 +439,7 @@
 			"file": "src/routing_machine.cpp",
 			"settings":
 			{
-				"buffer_size": 4140,
+				"buffer_size": 6582,
 				"line_ending": "Unix"
 			}
 		},
@@ -691,6 +695,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"exit(1);",
+			"%s",
+			":",
 			"float",
 			".",
 			"float",
@@ -834,15 +841,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4140,
+						"buffer_size": 6582,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1510,
-								1510
+								6251,
+								6251
 							]
 						],
 						"settings":
@@ -852,7 +859,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 795.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,

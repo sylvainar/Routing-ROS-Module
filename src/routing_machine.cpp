@@ -17,55 +17,14 @@
 
 using namespace std;
 
+// ===> Prototypes
 string apiCall(string website, string parameters);
 string isolateShape(string input);
 std::vector<float> decodePolyline(string encoded);
 string formateParameters(double slat, double slng, double elat, double elng);
+bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine::RoutingMachine::Response &res);
 
-bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine::RoutingMachine::Response &res)
-{
-	std::vector<float> coords;
-	string apiReturn;
-	string shape;
-
-	ROS_INFO("Routing Machine : WIP !");
-
-	apiReturn = apiCall("valhalla.mapzen.com",formateParameters(req.start_latitude,req.start_longitude,req.end_latitude,req.end_longitude));
-
-	if(apiReturn == "error")
-	{
-		ROS_FATAL("Routing Machine : Impossible to connect to routing API. Routing failed.");
-		//TODO : What's the output in this case ?
-	}
-	else
-	{
-		ROS_INFO("Routing Machine : Got information from API, processing.");
-		
-		shape = isolateShape(apiReturn);
-
-		ROS_INFO("pouet");
-		if(shape == "error")
-		{
-			ROS_FATAL("Routing Machine : Unable to parse data");
-			ROS_FATAL("Check API return : \n%s",apiReturn.c_str());
-		}
-		else
-		{
-			ROS_INFO("Routing Machine : Parsed correctly");
-			coords = decodePolyline(shape);
-
-			for (int i = 0; i < coords.size(); ++i)
-			{
-				res.coords.push_back(coords[i]);
-			}
-		}
-
-
-	}
-		
-	return true;
-}
-
+// ===> main
 int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "routing_machine");
@@ -78,18 +37,79 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+// ===> getRouting : principal function
+bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine::RoutingMachine::Response &res)
+{
+	// Variables declaration
+	std::vector<float> coords;
+	string apiReturn;
+	string shape;
 
+	// Start message
+	ROS_INFO("Routing Machine : WIP !");
+
+	// First, call the API
+	apiReturn = apiCall("valhalla.mapzen.com",formateParameters(req.start_latitude,req.start_longitude,req.end_latitude,req.end_longitude));
+
+	// Test the return. If we have an error, it means that the API is disconnected or the car isn't connected
+	// to the internet, so no need to go further.
+	if(apiReturn == "error")
+	{
+		ROS_FATAL("Routing Machine : Impossible to connect to routing API. Routing failed.");
+		//TODO : What's the output in this case ?
+	}
+	else
+	{
+		// Data has arrived! Next, extract the shape.
+		ROS_INFO("Routing Machine : Got information from API, processing.");
+		shape = isolateShape(apiReturn);
+
+		// Here, two possibilities. 
+		// - The export is a JSON object, containing the shape, so we use string function manipulation
+		//   to extract it, and after we'll be able to decode it with the polyline algorith.
+		// - The export is not parsable. That's mean that instead of a nice JSON object, we got an error
+		//   coming from the API. It could be pretty much anything, so we display it for debugging purpose.
+		//   For example, it could be a coordinate that doesn't exists.
+
+		if(shape == "error")
+		{
+			ROS_FATAL("Routing Machine : Unable to parse data");
+			ROS_FATAL("Check API return : \n%s",apiReturn.c_str());
+		}
+		else
+		{
+			ROS_INFO("Routing Machine : Parsed correctly");
+			// Now we can decode the shape, using the google algorithm.
+			// More info here : https://developers.google.com/maps/documentation/utilities/polylinealgorithm
+			coords = decodePolyline(shape);
+
+			// Now everything is finished, we put those data in the output array.
+			for (int i = 0; i < coords.size(); ++i)
+			{
+				res.coords.push_back(coords[i]);
+			}
+		}
+	}
+
+	ROS_INFO("Routing Machine : Finish! %ld waypoints.", coords.size()/2);
+	return true;
+}
+
+// ===> apiCall : open a socket one the website asked, with the parameters, and return the whole result.
 string apiCall(string website, string parameters) 
 {
-	ROS_INFO("Routing Machine : Contact API at %s%s",website.c_str(), parameters.c_str());
-	//===> Variables declarations
+	// Adapted from : http://www.mzan.com/article/17685466-http-request-by-sockets-in-c.shtml
+
+	// Variables declarations
 	int sock;
 	struct sockaddr_in client;
 	int PORT = 80;
 	string output;
 	string realoutput;
-
 	struct hostent * host = gethostbyname(website.c_str());
+
+	// Program starts
+	ROS_INFO("Routing Machine : Contact API at %s%s",website.c_str(), parameters.c_str());
 
 	if ( (host == NULL) || (host->h_addr == NULL) ) {
 		ROS_FATAL("Routing Machine : Error contacting DNS. Are you connected to the internet?");
@@ -127,7 +147,7 @@ string apiCall(string website, string parameters)
 		return "error";
 	}
 
-
+	// Copy buffer to output
 	char cur; 
 	int i = 0;
 	int j = 0;
@@ -139,10 +159,11 @@ string apiCall(string website, string parameters)
 	return output;
 }
 
+// ===> isolateShape : make a little string manipulation to separate the shape from the whole API return.
 string isolateShape(string input)
 {
 	std::size_t start = input.find("[{\"shape\":\"") + 11; 
-	ROS_INFO("%d",int(start));
+	
 	if(start == string::npos + 11) 
 	{
 		return "error";
@@ -154,9 +175,11 @@ string isolateShape(string input)
 	}
 }
 
+// ===> decodePolyline : decode the shape, which is encoded with a google algorithm
 std::vector<float> decodePolyline(string encoded)
 {
 	//Adapted from : https://github.com/paulobarcelos/ofxGooglePolyline
+	// More info here : https://developers.google.com/maps/documentation/utilities/polylinealgorithm
 	std::vector<float> points;
 	int len = encoded.length();
 	int index = 0;
@@ -192,6 +215,7 @@ std::vector<float> decodePolyline(string encoded)
 	return points;
 }
 
+// ===> formateParameters : using the start and finish coordinates, it formates the string with the params in it
 string formateParameters(double slat, double slng, double elat, double elng)
 {
 	char output[500];
