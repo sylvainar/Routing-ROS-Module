@@ -186,3 +186,8 @@ include_directories(
 
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
+
+
+add_executable(routing_machine src/routing_machine.cpp)
+target_link_libraries(routing_machine ${catkin_LIBRARIES})
+add_dependencies(routing_machine routing_machine_gencpp)
