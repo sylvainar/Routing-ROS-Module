@@ -13,6 +13,7 @@
 #include <fstream>
 #include <string.h>
 #include <vector>
+#include <ros/console.h>
 
 using namespace std;
 
@@ -23,9 +24,11 @@ string formateParameters(double slat, double slng, double elat, double elng);
 
 bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine::RoutingMachine::Response &res)
 {
-
+	ROS_INFO("Routing Machine : WIP !");
 	std::vector<float> coords;
 	string apiReturn;
+
+	ROS_INFO("Routing Machine : WIP !");
 
 	apiReturn = apiCall("valhalla.mapzen.com",formateParameters(req.start_latitude,req.start_longitude,req.end_latitude,req.end_longitude));
 
@@ -54,6 +57,7 @@ int main(int argc, char **argv)
 
 string apiCall(string website, string parameters) 
 {
+	ROS_INFO("Routing Machine : Contact API at %s%s",website.c_str(), parameters.c_str());
 	//===> Variables declarations
 	int sock;
 	struct sockaddr_in client;
@@ -64,7 +68,7 @@ string apiCall(string website, string parameters)
 	struct hostent * host = gethostbyname(website.c_str());
 
 	if ( (host == NULL) || (host->h_addr == NULL) ) {
-		cout << "Error retrieving DNS information." << endl;
+		ROS_FATAL("Routing Machine : Error retrieving DNS information.");
 		exit(1);
 	}
 
@@ -76,13 +80,13 @@ string apiCall(string website, string parameters)
 	sock = socket(AF_INET, SOCK_STREAM, 0);
 
 	if (sock < 0) {
-		cout << "Error creating socket." << endl;
+		ROS_FATAL("Routing Machine : Error creating socket.");
 		exit(1);
 	}
 
 	if ( connect(sock, (struct sockaddr *)&client, sizeof(client)) < 0 ) {
 		close(sock);
-		cout << "Could not connect" << endl;
+		ROS_FATAL("Routing Machine : Could not connect");
 		exit(1);
 	}
 
@@ -95,7 +99,7 @@ string apiCall(string website, string parameters)
 	string request = ss.str();
 
 	if (send(sock, request.c_str(), request.length(), 0) != (int)request.length()) {
-		cout << "Error sending request." << endl;
+		ROS_FATAL("Routing Machine : Error sending request.");
 		exit(1);
 	}
 
@@ -159,6 +163,6 @@ std::vector<float> decodePolyline(string encoded)
 string formateParameters(double slat, double slng, double elat, double elng)
 {
 	char output[500];
-	sprintf(output,"/route?json={\"locations\":[{\"lat\":%f,\"lon\":-0.335404928529},{\"lat\":39.48417030015832,\"lon\":-0.438079833984375}],\"costing\":\"pedestrian\",\"directions_options\":{\"units\":\"miles\"}}&api_key=valhalla-RsYgicy",slat);
+	sprintf(output,"/route?json={\"locations\":[{\"lat\":%f,\"lon\":%f},{\"lat\":%f,\"lon\":%f}],\"costing\":\"pedestrian\",\"directions_options\":{\"units\":\"miles\"}}&api_key=valhalla-RsYgicy",slat,slng,elat,elng);
 	return output;
 }

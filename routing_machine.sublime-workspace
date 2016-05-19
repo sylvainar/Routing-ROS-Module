@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"ROS",
+				"ROS_INFO"
+			],
+			[
 				"l",
 				"latitude"
 			],
@@ -431,7 +435,7 @@
 			"file": "src/routing_machine.cpp",
 			"settings":
 			{
-				"buffer_size": 579,
+				"buffer_size": 4140,
 				"line_ending": "Unix"
 			}
 		},
@@ -687,6 +691,10 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"float",
+			".",
+			"float",
+			",",
 			"beginner_tutorials",
 			"add_two_ints_server",
 			"long int",
@@ -826,25 +834,25 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 579,
+						"buffer_size": 4140,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								310,
-								310
+								1510,
+								1510
 							]
 						],
 						"settings":
 						{
 							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"tab_size": 4,
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 795.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -902,7 +910,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 45.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
@@ -970,7 +978,7 @@
 		[
 			[
 				"",
-				"/var/www/html/codesite/codesite.sublime-project"
+				"/var/www/html/Autonomous-Car-GPS-Guiding/webcodes/Autonomouscar.sublime-project"
 			],
 			[
 				"c",
