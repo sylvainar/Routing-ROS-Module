@@ -24,19 +24,43 @@ string formateParameters(double slat, double slng, double elat, double elng);
 
 bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine::RoutingMachine::Response &res)
 {
-	ROS_INFO("Routing Machine : WIP !");
 	std::vector<float> coords;
 	string apiReturn;
+	string shape;
 
 	ROS_INFO("Routing Machine : WIP !");
 
 	apiReturn = apiCall("valhalla.mapzen.com",formateParameters(req.start_latitude,req.start_longitude,req.end_latitude,req.end_longitude));
 
-	coords = decodePolyline(isolateShape(apiReturn));
-
-	for (int i = 0; i < coords.size(); ++i)
+	if(apiReturn == "error")
 	{
-		res.coords.push_back(coords[i]);
+		ROS_FATAL("Routing Machine : Impossible to connect to routing API. Routing failed.");
+		//TODO : What's the output in this case ?
+	}
+	else
+	{
+		ROS_INFO("Routing Machine : Got information from API, processing.");
+		
+		shape = isolateShape(apiReturn);
+
+		ROS_INFO("pouet");
+		if(shape == "error")
+		{
+			ROS_FATAL("Routing Machine : Unable to parse data");
+			ROS_FATAL("Check API return : \n%s",apiReturn.c_str());
+		}
+		else
+		{
+			ROS_INFO("Routing Machine : Parsed correctly");
+			coords = decodePolyline(shape);
+
+			for (int i = 0; i < coords.size(); ++i)
+			{
+				res.coords.push_back(coords[i]);
+			}
+		}
+
+
 	}
 		
 	return true;
@@ -68,8 +92,8 @@ string apiCall(string website, string parameters)
 	struct hostent * host = gethostbyname(website.c_str());
 
 	if ( (host == NULL) || (host->h_addr == NULL) ) {
-		ROS_FATAL("Routing Machine : Error retrieving DNS information.");
-		exit(1);
+		ROS_FATAL("Routing Machine : Error contacting DNS. Are you connected to the internet?");
+		return "error";
 	}
 
 	bzero(&client, sizeof(client));
@@ -81,13 +105,13 @@ string apiCall(string website, string parameters)
 
 	if (sock < 0) {
 		ROS_FATAL("Routing Machine : Error creating socket.");
-		exit(1);
+		return "error";
 	}
 
 	if ( connect(sock, (struct sockaddr *)&client, sizeof(client)) < 0 ) {
 		close(sock);
-		ROS_FATAL("Routing Machine : Could not connect");
-		exit(1);
+		ROS_FATAL("Routing Machine : Could not connect to API.");
+		return "error";
 	}
 
 	stringstream ss;
@@ -100,7 +124,7 @@ string apiCall(string website, string parameters)
 
 	if (send(sock, request.c_str(), request.length(), 0) != (int)request.length()) {
 		ROS_FATAL("Routing Machine : Error sending request.");
-		exit(1);
+		return "error";
 	}
 
 
@@ -117,9 +141,17 @@ string apiCall(string website, string parameters)
 
 string isolateShape(string input)
 {
-	std::size_t start = input.find("[{\"shape\":\"") + 11;  
-	std::size_t end = input.find("\"", start+12);  
-	return input.substr (start, end-start);
+	std::size_t start = input.find("[{\"shape\":\"") + 11; 
+	ROS_INFO("%d",int(start));
+	if(start == string::npos + 11) 
+	{
+		return "error";
+	}
+	else
+	{	
+		std::size_t end = input.find("\"", start+12);  
+		return input.substr (start, end-start);
+	}
 }
 
 std::vector<float> decodePolyline(string encoded)
