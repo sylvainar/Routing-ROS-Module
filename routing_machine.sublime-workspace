@@ -427,7 +427,7 @@
 			"file": "package.xml",
 			"settings":
 			{
-				"buffer_size": 2129,
+				"buffer_size": 2105,
 				"line_ending": "Unix"
 			}
 		}
@@ -579,7 +579,10 @@
 	},
 	"expanded_folders":
 	[
-		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine"
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine",
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/include",
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/include/routing_machine",
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/src"
 	],
 	"file_history":
 	[
@@ -787,18 +790,18 @@
 				{
 					"buffer": 0,
 					"file": "package.xml",
-					"semi_transient": true,
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2129,
+						"buffer_size": 2105,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								266,
+								266
 							]
 						],
 						"settings":
@@ -808,7 +811,7 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 405.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
