@@ -19,7 +19,7 @@ using namespace std;
 string apiCall(string website, string parameters);
 string isolateShape(string input);
 std::vector<float> decodePolyline(string encoded);
-string formateParameters(float slat, float slng, float elat, float elng);
+string formateParameters(double slat, double slng, double elat, double elng);
 
 bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine::RoutingMachine::Response &res)
 {
@@ -27,7 +27,7 @@ bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine:
 	std::vector<float> coords;
 	string apiReturn;
 
-	apiReturn = apiCall("valhalla.mapzen.com",formateParameters(39.4783618733,-0.335404928529,39.48417030015832,-0.438079833984375));
+	apiReturn = apiCall("valhalla.mapzen.com",formateParameters(req.start_latitude,req.start_longitude,req.end_latitude,req.end_longitude));
 
 	coords = decodePolyline(isolateShape(apiReturn));
 
@@ -156,7 +156,7 @@ std::vector<float> decodePolyline(string encoded)
 	return points;
 }
 
-string formateParameters(float slat, float slng, float elat, float elng)
+string formateParameters(double slat, double slng, double elat, double elng)
 {
 	char output[500];
 	sprintf(output,"/route?json={\"locations\":[{\"lat\":%f,\"lon\":-0.335404928529},{\"lat\":39.48417030015832,\"lon\":-0.438079833984375}],\"costing\":\"pedestrian\",\"directions_options\":{\"units\":\"miles\"}}&api_key=valhalla-RsYgicy",slat);
