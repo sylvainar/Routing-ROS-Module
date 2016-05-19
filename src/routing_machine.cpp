@@ -7,15 +7,9 @@ bool test(routing_machine::RoutingMachine::Request  &req, routing_machine::Routi
 	
   for(int i = 0; i < 4; i++)
   {
-  	/*
-  	res.latitude[i] = (float)i;
-  	res.longitude[i] = (float)(i+1);
-  	*/
-  	res.latitude.push_back ((float)i);
-  	res.longitude.push_back((float)i);
+  	res.coords.push_back((float)i*10); //Latitude 
+  	res.coords.push_back((float)i*100); //Longitude
   }
-
-  //ROS_INFO("request: x=%f, y=%f", (float)req.start_latitude, (float)req.start_longitude);
 
   return true;
 }

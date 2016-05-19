@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"l",
+				"latitude"
+			],
+			[
 				"lat",
 				"latlng"
 			],
@@ -424,10 +428,26 @@
 	"buffers":
 	[
 		{
-			"file": "package.xml",
+			"file": "src/routing_machine.cpp",
 			"settings":
 			{
-				"buffer_size": 2105,
+				"buffer_size": 579,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "srv/RoutingMachine.srv",
+			"settings":
+			{
+				"buffer_size": 110,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "CMakeLists.txt",
+			"settings":
+			{
+				"buffer_size": 6397,
 				"line_ending": "Unix"
 			}
 		}
@@ -440,7 +460,7 @@
 	"command_palette":
 	{
 		"height": 392.0,
-		"last_filter": "ssht",
+		"last_filter": "",
 		"selected_items":
 		[
 			[
@@ -582,10 +602,16 @@
 		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine",
 		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/include",
 		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/include/routing_machine",
-		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/src"
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/msg",
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/src",
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/srv"
 	],
 	"file_history":
 	[
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/msg/output_coords.msg",
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/package.xml",
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/srv/RoutingMachine.srv",
+		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/CMakeLists.txt",
 		"/var/www/html/Autonomous-Car-GPS-Guiding/webcodes/scripts.js",
 		"/var/www/html/Autonomous-Car-GPS-Guiding/webcodes/index.php",
 		"/var/www/html/Autonomous-Car-GPS-Guiding/apicall.php",
@@ -661,6 +687,13 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"beginner_tutorials",
+			"add_two_ints_server",
+			"long int",
+			"AddTwoInts",
+			"generate",
+			"find_pa",
+			"catkin_package",
 			"lng",
 			"lon",
 			"longitud",
@@ -789,32 +822,90 @@
 			[
 				{
 					"buffer": 0,
-					"file": "package.xml",
+					"file": "src/routing_machine.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2105,
+						"buffer_size": 579,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								266,
-								266
+								310,
+								310
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/XML/XML.tmLanguage",
+							"syntax": "Packages/C++/C++.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 405.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "srv/RoutingMachine.srv",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 110,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								110,
+								110
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "CMakeLists.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6397,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6389,
+								6389
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 45.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -879,7 +970,7 @@
 		[
 			[
 				"",
-				"/var/www/html/codeapi/api.sublime-project"
+				"/var/www/html/codesite/codesite.sublime-project"
 			],
 			[
 				"c",

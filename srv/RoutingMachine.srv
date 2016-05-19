@@ -3,5 +3,4 @@ float64 start_longitude
 float64 end_latitude
 float64 end_longitude
 ---
-float64[] latitude
-float64[] longitude
+float64[] coords
