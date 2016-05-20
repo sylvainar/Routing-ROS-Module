@@ -20,7 +20,7 @@ using namespace std;
 // ===> Prototypes
 string apiCall(string website, string parameters);
 string isolateShape(string input);
-std::vector<float> decodePolyline(string encoded);
+int decodePolyline(string encoded, std::vector<double> *latitude, std::vector<double> *longitude);
 string formateParameters(double slat, double slng, double elat, double elng);
 bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine::RoutingMachine::Response &res);
 
@@ -41,7 +41,8 @@ int main(int argc, char **argv)
 bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine::RoutingMachine::Response &res)
 {
 	// Variables declaration
-	std::vector<float> coords;
+	std::vector<double> latitude;
+	std::vector<double> longitude;
 	string apiReturn;
 	string shape;
 
@@ -81,21 +82,21 @@ bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine:
 			ROS_INFO("Routing Machine : Parsed correctly");
 			// Now we can decode the shape, using the google algorithm.
 			// More info here : https://developers.google.com/maps/documentation/utilities/polylinealgorithm
-			coords = decodePolyline(shape);
+			// We give the function two pointers, so we get our vectors directly written.
+			decodePolyline(shape, &latitude, &longitude);
 
-			// Now everything is finished, we put those data in the output array.
-			for (int i = 0; i < coords.size(); ++i)
-			{
-				res.coords.push_back(coords[i]);
-			}
+			// And now we make a nice output.
+			res.latitude = latitude;
+			res.longitude = longitude;
+			res.num_wpts = latitude.size();
 		}
 	}
 
-	ROS_INFO("Routing Machine : Finish! %ld waypoints.", coords.size()/2);
+	ROS_INFO("Routing Machine : Finish! %ld waypoints.", latitude.size());
 	return true;
 }
 
-// ===> apiCall : open a socket one the website asked, with the parameters, and return the whole result.
+// ===> apiCall : open a socket on the website asked, with the parameters, and return the whole result.
 string apiCall(string website, string parameters) 
 {
 	// Adapted from : http://www.mzan.com/article/17685466-http-request-by-sockets-in-c.shtml
@@ -176,7 +177,7 @@ string isolateShape(string input)
 }
 
 // ===> decodePolyline : decode the shape, which is encoded with a google algorithm
-std::vector<float> decodePolyline(string encoded)
+int decodePolyline(string encoded, std::vector<double> *latitude, std::vector<double> *longitude)
 {
 	//Adapted from : https://github.com/paulobarcelos/ofxGooglePolyline
 	// More info here : https://developers.google.com/maps/documentation/utilities/polylinealgorithm
@@ -208,11 +209,11 @@ std::vector<float> decodePolyline(string encoded)
 		float dlng = ((result & 1) ? ~(result >> 1) : (result >> 1));
 		lng += dlng;
 
-		points.push_back(lat * (float)1e-6);
-		points.push_back(lng * (float)1e-6);
+		latitude -> push_back(lat * (float)1e-6);
+		longitude -> push_back(lng * (float)1e-6);
 	}
 
-	return points;
+	return 0;
 }
 
 // ===> formateParameters : using the start and finish coordinates, it formates the string with the params in it

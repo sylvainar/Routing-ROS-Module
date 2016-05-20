@@ -3,4 +3,6 @@ float64 start_longitude
 float64 end_latitude
 float64 end_longitude
 ---
-float64[] coords
+float64[] latitude
+float64[] longitude
+int8 num_wpts

@@ -439,7 +439,7 @@
 			"file": "src/routing_machine.cpp",
 			"settings":
 			{
-				"buffer_size": 6582,
+				"buffer_size": 6588,
 				"line_ending": "Unix"
 			}
 		},
@@ -841,15 +841,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6582,
+						"buffer_size": 6588,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6251,
-								6251
+								3059,
+								3059
 							]
 						],
 						"settings":
@@ -859,7 +859,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 945.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
