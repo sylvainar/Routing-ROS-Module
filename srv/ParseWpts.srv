@@ -1,4 +1,4 @@
-bool get_waypoints
+bool get_wpts
 ---
 float64[] latitude
 float64[] longitude

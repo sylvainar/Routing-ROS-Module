@@ -1,5 +1,5 @@
 #include "ros/ros.h"
-#include "routing_machine/ParseWpts.h"
+#include "routing_machine/RoutingMachine.h"
 #include <iostream>
 #include <ctype.h>
 #include <cstring>
