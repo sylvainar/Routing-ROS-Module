@@ -53,7 +53,7 @@ bool getRouting(routing_machine::RoutingMachine::Request  &req, routing_machine:
 		ROS_INFO("Routing Machine : WIP !");
 
 		// First, call the API
-		apiReturn = apiCall("valhalla.mapzen.com",formateParameters(39.4783618733,-0.335404928529,39.481123002487195,-0.3413164615631103));
+		apiReturn = apiCall("valhalla.mapzen.com",formateParameters(39.4783618733,-0.335404928529,39.47927634137496,-0.3385484218597412));
 
 		// Test the return. If we have an error, it means that the API is disconnected or the car isn't connected
 		// to the internet, so no need to go further.
