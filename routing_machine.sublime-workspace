@@ -5,7 +5,7 @@
 		[
 			[
 				"ROS",
-				"ROS_INFO"
+				"ROS_ERROR"
 			],
 			[
 				"sl",
@@ -439,7 +439,7 @@
 			"file": "src/routing_machine.cpp",
 			"settings":
 			{
-				"buffer_size": 6588,
+				"buffer_size": 7270,
 				"line_ending": "Unix"
 			}
 		},
@@ -447,7 +447,7 @@
 			"file": "srv/RoutingMachine.srv",
 			"settings":
 			{
-				"buffer_size": 110,
+				"buffer_size": 106,
 				"line_ending": "Unix"
 			}
 		},
@@ -695,6 +695,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"float",
+			"<float> ",
 			"exit(1);",
 			"%s",
 			":",
@@ -841,15 +843,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6588,
+						"buffer_size": 7270,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3059,
-								3059
+								3087,
+								3087
 							]
 						],
 						"settings":
@@ -859,7 +861,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 945.0,
+						"translation.y": 225.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -871,15 +873,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 110,
+						"buffer_size": 106,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								110,
-								110
+								106,
+								106
 							]
 						],
 						"settings":
