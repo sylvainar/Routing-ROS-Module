@@ -46,59 +46,87 @@ bool getRouting(routing_machine::ParseWpts::Request  &req, routing_machine::Pars
 		// Variables declaration
 		std::vector<double> latitude;
 		std::vector<double> longitude;
+		
+		float endLatitude;
+		float endLongitude;
+		float startLatitude;
+		float startLongitude;
+		bool goTo;
+		
 		string apiReturn;
 		string shape;
 
-		// Start message
-		ROS_INFO("Routing Machine : WIP !");
-
-		// First, call the API
-		apiReturn = apiCall("valhalla.mapzen.com",formateParameters(39.4783618733,-0.335404928529,39.47927634137496,-0.3385484218597412));
-
-		// Test the return. If we have an error, it means that the API is disconnected or the car isn't connected
-		// to the internet, so no need to go further.
-		if(apiReturn == "error")
+		// First test : we check if the interface has been launched. If so, it should have set the parameters
+		// Second test : we check if the user has provided a route by checking goTo's value.
+		if (ros::param::get("/routing_machine/destination/goTo", goTo) && goTo == true)
 		{
-			ROS_FATAL("Routing Machine : Impossible to connect to routing API. Routing failed.");
-			res.success = false;
-		}
-		else
-		{
-			// Data has arrived! Next, extract the shape.
-			ROS_INFO("Routing Machine : Got information from API, processing.");
-			shape = isolateShape(apiReturn);
+			// If the parameters goTo has been set, the 4 others should have been too. We get their values.
+			ros::param::get("/routing_machine/start/latitude", startLatitude);
+			ros::param::get("/routing_machine/start/longitude", startLongitude);
+			ros::param::get("/routing_machine/destination/latitude", endLatitude);
+			ros::param::get("/routing_machine/destination/longitude", endLongitude);
 
-			// Here, two possibilities. 
-			// - The export is a JSON object, containing the shape, so we use string function manipulation
-			//   to extract it, and after we'll be able to decode it with the polyline algorith.
-			// - The export is not parsable. That's mean that instead of a nice JSON object, we got an error
-			//   coming from the API. It could be pretty much anything, so we display it for debugging purpose.
-			//   For example, it could be a coordinate that doesn't exists.
+			ROS_INFO("Start lat : %f lon : %f - End : lat : %f lon : %f", startLatitude, startLongitude, endLatitude, endLongitude);
 
-			if(shape == "error")
+
+			// Start message
+			ROS_INFO("Routing Machine : WIP !");
+
+			// First, call the API
+			apiReturn = apiCall("valhalla.mapzen.com",formateParameters(startLatitude,startLongitude,endLatitude,endLongitude));
+
+			// Test the return. If we have an error, it means that the API is disconnected or the car isn't connected
+			// to the internet, so no need to go further.
+			if(apiReturn == "error")
 			{
-				ROS_FATAL("Routing Machine : Unable to parse data");
-				ROS_FATAL("Check API return : \n%s",apiReturn.c_str());
+				ROS_FATAL("Routing Machine : Impossible to connect to routing API. Routing failed.");
 				res.success = false;
 			}
 			else
 			{
-				ROS_INFO("Routing Machine : Parsed correctly");
-				// Now we can decode the shape, using the google algorithm.
-				// More info here : https://developers.google.com/maps/documentation/utilities/polylinealgorithm
-				// We give the function two pointers, so we get our vectors directly written.
-				decodePolyline(shape, &latitude, &longitude);
+				// Data has arrived! Next, extract the shape.
+				ROS_INFO("Routing Machine : Got information from API, processing.");
+				shape = isolateShape(apiReturn);
 
-				// And now we make a nice output.
-				res.latitude = latitude;
-				res.longitude = longitude;
-				res.num_wpts = latitude.size();
-				res.success = true;
+				// Here, two possibilities. 
+				// - The export is a JSON object, containing the shape, so we use string function manipulation
+				//   to extract it, and after we'll be able to decode it with the polyline algorith.
+				// - The export is not parsable. That's mean that instead of a nice JSON object, we got an error
+				//   coming from the API. It could be pretty much anything, so we display it for debugging purpose.
+				//   For example, it could be a coordinate that doesn't exists.
+
+				if(shape == "error")
+				{
+					ROS_FATAL("Routing Machine : Unable to parse data");
+					ROS_FATAL("Check API return : \n%s",apiReturn.c_str());
+					res.success = false;
+				}
+				else
+				{
+					ROS_INFO("Routing Machine : Parsed correctly");
+					// Now we can decode the shape, using the google algorithm.
+					// More info here : https://developers.google.com/maps/documentation/utilities/polylinealgorithm
+					// We give the function two pointers, so we get our vectors directly written.
+					decodePolyline(shape, &latitude, &longitude);
+
+					// And now we make a nice output.
+					res.latitude = latitude;
+					res.longitude = longitude;
+					res.num_wpts = latitude.size();
+					res.success = true;
+				}
 			}
-		}
 
-		ROS_INFO("Routing Machine : Finish! %ld waypoints.", latitude.size());
-		return true;
+			ROS_INFO("Routing Machine : Finish! %ld waypoints.", latitude.size());
+			return true;
+		}
+		else
+		{
+			// The interface has not been launched or the user hasn't provided any route
+			ROS_INFO("No destination set.");
+			res.success = false;
+			return true;
+		}
 	}
 	else
 	{

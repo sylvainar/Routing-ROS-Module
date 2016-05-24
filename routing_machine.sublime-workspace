@@ -4,6 +4,42 @@
 		"selected_items":
 		[
 			[
+				"end",
+				"endLongitude"
+			],
+			[
+				"en",
+				"endLatitude"
+			],
+			[
+				"st",
+				"startLongitude"
+			],
+			[
+				"startL",
+				"startLatitude"
+			],
+			[
+				"sta",
+				"startLongitude"
+			],
+			[
+				"star",
+				"startLatitude"
+			],
+			[
+				"rou",
+				"routing_machine"
+			],
+			[
+				"lati",
+				"latitudeDestination"
+			],
+			[
+				"ro",
+				"ROS_INFO"
+			],
+			[
 				"ROS",
 				"ROS_ERROR"
 			],
@@ -36,20 +72,8 @@
 				"trackMarker"
 			],
 			[
-				"st",
-				"startRoad"
-			],
-			[
-				"end",
-				"endPoint"
-			],
-			[
 				"tr",
 				"trackMarker"
-			],
-			[
-				"rou",
-				"routeControl"
 			],
 			[
 				"route",
@@ -61,10 +85,6 @@
 			],
 			[
 				"start",
-				"startPoint"
-			],
-			[
-				"star",
 				"startPoint"
 			],
 			[
@@ -210,10 +230,6 @@
 			[
 				"user",
 				"user_location"
-			],
-			[
-				"en",
-				"event"
 			],
 			[
 				"map",
@@ -439,15 +455,7 @@
 			"file": "src/routing_machine.cpp",
 			"settings":
 			{
-				"buffer_size": 7270,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "srv/RoutingMachine.srv",
-			"settings":
-			{
-				"buffer_size": 106,
+				"buffer_size": 7716,
 				"line_ending": "Unix"
 			}
 		},
@@ -455,7 +463,7 @@
 			"file": "CMakeLists.txt",
 			"settings":
 			{
-				"buffer_size": 6397,
+				"buffer_size": 6393,
 				"line_ending": "Unix"
 			}
 		}
@@ -607,15 +615,11 @@
 	},
 	"expanded_folders":
 	[
-		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine",
-		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/include",
-		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/include/routing_machine",
-		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/msg",
-		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/src",
-		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/srv"
+		"/home/sylvain/catkin_ws/src/Routing-ROS-Module"
 	],
 	"file_history":
 	[
+		"/home/sylvain/catkin_ws/src/Routing-ROS-Module/srv/RoutingMachine.srv",
 		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/msg/output_coords.msg",
 		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/package.xml",
 		"/home/sylvain/Logiciels/catkin_ws/src/routing_machine/srv/RoutingMachine.srv",
@@ -695,6 +699,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"destination",
 			"float",
 			"<float> ",
 			"exit(1);",
@@ -843,15 +848,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7270,
+						"buffer_size": 7716,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3087,
-								3087
+								1840,
+								1840
 							]
 						],
 						"settings":
@@ -861,7 +866,7 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 225.0,
+						"translation.y": 705.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -869,47 +874,19 @@
 				},
 				{
 					"buffer": 1,
-					"file": "srv/RoutingMachine.srv",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 106,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								106,
-								106
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "CMakeLists.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6397,
+						"buffer_size": 6393,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6389,
-								6389
+								0,
+								0
 							]
 						],
 						"settings":
@@ -922,7 +899,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
